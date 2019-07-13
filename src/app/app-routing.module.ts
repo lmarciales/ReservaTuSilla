@@ -8,9 +8,6 @@ const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 
 export const routes: Routes = [
-  // { path: '', component: LoginComponent, ...canActivate(redirectLoggedInToHome) },
-  // { path: 'login', component: LoginComponent, ...canActivate(redirectLoggedInToHome) },
-  // { path: 'home', component: HomeComponent, ...canActivate(redirectUnauthorizedToLogin) },
   {
     path: '',
     component: LoginComponent,

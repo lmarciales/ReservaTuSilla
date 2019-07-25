@@ -13,3 +13,8 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.logo {
+  padding: 6px 20px 6px 6px;
+  width: 90px;
+}

@@ -10,19 +10,28 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { environment } from '../environments/environment';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
+import { DragComponent } from './components/drag/drag.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DateComponent } from './components/date/date.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    MenuComponent
+    MenuComponent,
+    DragComponent,
+    ModalComponent,
+    DateComponent
   ],
   imports: [
     BrowserModule,
@@ -37,6 +46,9 @@ import { MenuComponent } from './components/menu/menu.component';
     MatIconModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
+    MDBBootstrapModule.forRoot(),
+    NgbModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

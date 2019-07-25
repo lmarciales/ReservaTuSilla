@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ChairService } from '../../services/chair.service';
 import { ReservationsService } from '../../services/reservations.service';
 import { UserService } from '../../services/user.service';
+import { chairModel } from 'src/app/model/chair.model';
+import { reserveChair } from 'src/app/model/reserveChair.model';
 
 @Component({
   selector: 'app-home',
@@ -10,24 +12,32 @@ import { UserService } from '../../services/user.service';
 })
 export class HomeComponent implements OnInit {
 
-  userInfo;
+  userInfo: any;
+  chairName: any;
+  users: any;
+  chairs: any;
+  reservations: any;
+  closeResult: string;
 
-  chairName;
-
-  users;
-  chairs;
-  reservations;
+  dataChair: chairModel;
 
   constructor(private userService: UserService, private chairService: ChairService, private reservationService: ReservationsService) {
+    this.dataChair = {
+      userId: null,
+      chairId: null,
+      name: null,
+      isReserved: null
+    }
   }
 
   ngOnInit() {
     this.userService.getCurrentUser().then((user) => {
       this.userInfo = user;
+      this.chairName = 'hola';
+      this.createChair();
     }).catch(error => {
       console.log(error);
     });
-
     this.getUsers();
     this.getChairs();
     this.getReservations();
@@ -42,6 +52,10 @@ export class HomeComponent implements OnInit {
           ...e.payload.doc.data()
         };
       });
+      this.dataChair.name = this.userInfo.displayName;
+      this.dataChair.userId = 1234;
+      this.dataChair.chairId = 9876;
+      this.dataChair.isReserved = false;
     }, error => {
       console.log(error);
     });
@@ -53,7 +67,6 @@ export class HomeComponent implements OnInit {
       name: this.chairName,
       isReserved: false
     };
-
     this.chairService.createChair(chair).then(() => {
       console.log('Chair created');
     }).catch((error) => {
@@ -63,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   getChairs() {
     this.chairService.getChairs().subscribe((data) => {
-      this.chairs = data.map(e => {
+      this.chairs = data.map((e) => {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
@@ -104,22 +117,19 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  takeChair(chair) {
+  takeChair(chair: reserveChair) {
     const reservation = {
-      userId: this.userInfo.uid,
-      chairId: chair.id
+      userId: chair.userId,
+      chairId: chair.chairId
     };
-
     const hasReserved = this.reservations.find(r => r.userId === reservation.userId);
-
+    console.log(hasReserved);
     if (!chair.isReserved && !hasReserved) {
       this.reservationService.createReservation(reservation).then(() => {
         console.log('Reservation created');
         this.userInfo.hasReserved = true;
-
         chair.isReserved = true;
         this.updateChair(chair);
-
       }).catch(error => {
         console.log(error);
       });
@@ -133,10 +143,8 @@ export class HomeComponent implements OnInit {
       this.reservationService.deleteReservation(reservation).then(() => {
         console.log('Reservation deleted');
         this.userInfo.hasReserved = false;
-
         const chair = this.chairs.find(c => c.id === reservation.chairId);
         chair.isReserved = false;
-
         this.updateChair(chair);
       }).catch(error => {
         console.log(error);
@@ -145,5 +153,5 @@ export class HomeComponent implements OnInit {
       console.log('Can not remove reservations from others');
     }
   }
-
+  // Open Modal
 }

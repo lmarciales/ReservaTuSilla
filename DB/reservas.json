@@ -1,0 +1,14 @@
+{
+    "reservas":[
+        {
+            "id":"number",
+            "sala":"number",
+            "fila":"number",
+            "columna":"number",
+            "fecha":"date",
+            "horaInicio":"number",
+            "horaFin":"number",
+            "usuario":"usuario_id"
+        }
+    ]
+}

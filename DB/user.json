@@ -1,0 +1,10 @@
+{
+    "usuario":[
+        {
+            "id":"number",
+            "email":"string",
+            "nombre":"string",
+            "password":"string"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "salas":
+    [
+        {
+            "id":"number",
+            "descripcion":"string",
+            "filas":[
+                {
+                    "id":"number",
+                    "nroFila":"number",
+                    "descripcion":"string",
+                    "columnas":[
+                        {
+                            "id":"number",
+                            "nroColumna":"number",
+                            "descripcion":"string",
+                            "propietario?":"usuario_id",
+                            "disponibilidad":[
+                                {
+                                    "fechaInicio":"date",
+                                    "fechaFin":"date",
+                                    "horaInicio":"number",
+                                    "horaFin":"number"
+                                }
+                            ] 
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+

@@ -22,6 +22,7 @@ import { DragComponent } from './components/drag/drag.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
+import { ReservationStateComponent } from './components/main/reservation-state/reservation-state.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DateComponent } from './components/date/date.component';
     MenuComponent,
     DragComponent,
     ModalComponent,
-    DateComponent
+    DateComponent,
+    ReservationStateComponent
   ],
   imports: [
     BrowserModule,

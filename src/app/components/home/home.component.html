@@ -5,10 +5,12 @@
   <br>
   <br>
   <br>
+  <app-reservation-state [information]="dataReservation"></app-reservation-state>
   <ibm-drag [chair]="dataChair" ></ibm-drag>
 </ng-container>
 
 <div class="container" *ngIf="userInfo">
+
   <h2>Get user info</h2>
   <p><b>Uid:</b> {{userInfo.uid}}</p>
   <p><b>Name:</b> {{userInfo.displayName}}</p>

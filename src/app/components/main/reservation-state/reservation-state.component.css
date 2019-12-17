@@ -1,0 +1,14 @@
+.reservation-data {
+  align-items: center;
+  border: none;
+  text-align: center;
+}
+.reservation-data .reservation-icon {
+  max-width: 70px;
+}
+.reservation-data .label {
+  margin-bottom: -0.25rem;
+}
+.reservation-data .reservation-information {
+  font-size: 24px;
+}

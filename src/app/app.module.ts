@@ -23,6 +23,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { ReservationStateComponent } from './components/main/reservation-state/reservation-state.component';
+import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,9 @@ import { ReservationStateComponent } from './components/main/reservation-state/r
     DragComponent,
     ModalComponent,
     DateComponent,
-    ReservationStateComponent
+    ReservationStateComponent,
+    ConfirmationModalComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

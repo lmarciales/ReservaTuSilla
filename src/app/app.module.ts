@@ -22,6 +22,8 @@ import { DragComponent } from './components/drag/drag.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
+import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
+import { AlertComponent } from './components/shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { DateComponent } from './components/date/date.component';
     MenuComponent,
     DragComponent,
     ModalComponent,
-    DateComponent
+    DateComponent,
+    ConfirmationModalComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

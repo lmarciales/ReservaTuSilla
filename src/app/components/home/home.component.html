@@ -9,6 +9,9 @@
 </ng-container>
 
 <div class="container" *ngIf="userInfo">
+
+  <app-confirmation-modal [properties]="modalProperties"></app-confirmation-modal>
+
   <h2>Get user info</h2>
   <p><b>Uid:</b> {{userInfo.uid}}</p>
   <p><b>Name:</b> {{userInfo.displayName}}</p>

@@ -4,6 +4,7 @@ import { ReservationsService } from '../../services/reservations.service';
 import { UserService } from '../../services/user.service';
 import { chairModel } from 'src/app/model/chair.model';
 import { reserveChair } from 'src/app/model/reserveChair.model';
+import { ConfirmationModalModel } from 'src/app/models/confirmation-modal.model';
 
 @Component({
   selector: 'app-home',
@@ -19,15 +20,23 @@ export class HomeComponent implements OnInit {
   reservations: any;
   closeResult: string;
 
+  modalProperties: ConfirmationModalModel;
+
   dataChair: chairModel;
 
   constructor(private userService: UserService, private chairService: ChairService, private reservationService: ReservationsService) {
+    this.modalProperties = {
+      buttonText: 'Eliminar',
+      function: 'Soy una función',
+      modalText: '¿Está seguro que desea eliminar este archivo?',
+      title: 'Eliminar función'
+    };
     this.dataChair = {
       userId: null,
       chairId: null,
       name: null,
       isReserved: null
-    }
+    };
   }
 
   ngOnInit() {

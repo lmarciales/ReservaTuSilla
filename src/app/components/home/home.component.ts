@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChairService } from '../../services/chair.service';
 import { ReservationsService } from '../../services/reservations.service';
+import { AuthService } from '../../services/auth.service';
 import { chairModel } from 'src/app/model/chair.model';
 import { reserveChair } from 'src/app/model/reserveChair.model';
 import { ReservationView } from 'src/app/model/reservationView.model';
@@ -37,14 +38,6 @@ export class HomeComponent implements OnInit {
       modalText: '¿Está seguro que desea eliminar este archivo?',
       title: 'Eliminar función'
     };
-
-    this.dataChair = {
-      userId: null,
-      chairId: null,
-      name: null,
-      isReserved: null
-    };
-  }
 
   ngOnInit() {
   }

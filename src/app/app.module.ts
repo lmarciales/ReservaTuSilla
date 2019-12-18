@@ -22,6 +22,8 @@ import { DragComponent } from './components/drag/drag.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
+import { AdministrationComponent } from './components/administration/administration.component';
+import { LayoutComponent } from './components/shared/layout/layout.component';
 import { ReservationStateComponent } from './components/main/reservation-state/reservation-state.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 
@@ -34,6 +36,8 @@ import { ConfirmationModalComponent } from './components/shared/confirmation-mod
     DragComponent,
     ModalComponent,
     DateComponent,
+    AdministrationComponent,
+    LayoutComponent
     ReservationStateComponent,
     ConfirmationModalComponent,
     AlertComponent

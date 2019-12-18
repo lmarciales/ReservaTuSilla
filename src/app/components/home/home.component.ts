@@ -4,6 +4,8 @@ import { ReservationsService } from '../../services/reservations.service';
 import { AuthService } from '../../services/auth.service';
 import { chairModel } from 'src/app/model/chair.model';
 import { reserveChair } from 'src/app/model/reserveChair.model';
+import { ReservationView } from 'src/app/model/reservationView.model';
+import { ConfirmationModalModel } from 'src/app/models/confirmation-modal.model';
 
 @Component({
   selector: 'app-home',
@@ -19,46 +21,29 @@ export class HomeComponent implements OnInit {
   reservations: any;
   closeResult: string;
 
-  dataChair: chairModel;
+  modalProperties: ConfirmationModalModel;
 
-  constructor(private userService: AuthService, private chairService: ChairService, private reservationService: ReservationsService) {
-    this.dataChair = {
-      userId: null,
-      chairId: null,
-      name: null,
-      isReserved: null
-    }
-  }
+  dataChair: chairModel;
+  dataReservation: ReservationView = {
+    date: '01/01/2020',
+    timeStart: '08:00',
+    timeEnd: '16:00',
+    location: 'Occidental wing'
+  };
+
+  constructor(private userService: UserService, private chairService: ChairService, private reservationService: ReservationsService) {
+    this.modalProperties = {
+      buttonText: 'Eliminar',
+      function: 'Soy una función',
+      modalText: '¿Está seguro que desea eliminar este archivo?',
+      title: 'Eliminar función'
+    };
 
   ngOnInit() {
-    // this.userService.getCurrentUser().then((user) => {
-    //   this.userInfo = user;
-    //   this.chairName = 'hola';
-    //   this.createChair();
-    // }).catch(error => {
-    //   console.log(error);
-    // });
-    this.getUsers();
-    this.getChairs();
-    this.getReservations();
   }
 
   // User functions
   getUsers() {
-    // this.userService.getUsers().subscribe((data) => {
-    //   this.users = data.map(e => {
-    //     return {
-    //       id: e.payload.doc.id,
-    //       ...e.payload.doc.data()
-    //     };
-    //   });
-    //   this.dataChair.name = this.userInfo.displayName;
-    //   this.dataChair.userId = 1234;
-    //   this.dataChair.chairId = 9876;
-    //   this.dataChair.isReserved = false;
-    // }, error => {
-    //   console.log(error);
-    // });
   }
 
   // Chair functions
@@ -75,16 +60,6 @@ export class HomeComponent implements OnInit {
   }
 
   getChairs() {
-    this.chairService.getChairs().subscribe((data) => {
-      this.chairs = data.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        };
-      });
-    }, error => {
-      console.log(error);
-    });
   }
 
   updateChair(chair) {
@@ -105,16 +80,6 @@ export class HomeComponent implements OnInit {
 
   // Reservation functions
   getReservations() {
-    this.reservationService.getReservations().subscribe((data) => {
-      this.reservations = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        };
-      });
-    }, error => {
-      console.log(error);
-    });
   }
 
   takeChair(chair: reserveChair) {

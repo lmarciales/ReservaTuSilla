@@ -24,6 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { AdministrationComponent } from './components/administration/administration.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { ReservationStateComponent } from './components/main/reservation-state/reservation-state.component';
+import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,9 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     DateComponent,
     AdministrationComponent,
     LayoutComponent
+    ReservationStateComponent,
+    ConfirmationModalComponent,
+    AlertComponent
   ],
   imports: [
     BrowserModule,

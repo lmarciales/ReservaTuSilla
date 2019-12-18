@@ -22,6 +22,8 @@ import { DragComponent } from './components/drag/drag.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
+import { AdministrationComponent } from './components/administration/administration.component';
+import { LayoutComponent } from './components/shared/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { DateComponent } from './components/date/date.component';
     MenuComponent,
     DragComponent,
     ModalComponent,
-    DateComponent
+    DateComponent,
+    AdministrationComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,

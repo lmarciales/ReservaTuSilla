@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChairService } from '../../services/chair.service';
 import { ReservationsService } from '../../services/reservations.service';
-import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { chairModel } from 'src/app/model/chair.model';
 import { reserveChair } from 'src/app/model/reserveChair.model';
 
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   dataChair: chairModel;
 
-  constructor(private userService: UserService, private chairService: ChairService, private reservationService: ReservationsService) {
+  constructor(private userService: AuthService, private chairService: ChairService, private reservationService: ReservationsService) {
     this.dataChair = {
       userId: null,
       chairId: null,
@@ -31,13 +31,13 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.getCurrentUser().then((user) => {
-      this.userInfo = user;
-      this.chairName = 'hola';
-      this.createChair();
-    }).catch(error => {
-      console.log(error);
-    });
+    // this.userService.getCurrentUser().then((user) => {
+    //   this.userInfo = user;
+    //   this.chairName = 'hola';
+    //   this.createChair();
+    // }).catch(error => {
+    //   console.log(error);
+    // });
     this.getUsers();
     this.getChairs();
     this.getReservations();
@@ -45,20 +45,20 @@ export class HomeComponent implements OnInit {
 
   // User functions
   getUsers() {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        };
-      });
-      this.dataChair.name = this.userInfo.displayName;
-      this.dataChair.userId = 1234;
-      this.dataChair.chairId = 9876;
-      this.dataChair.isReserved = false;
-    }, error => {
-      console.log(error);
-    });
+    // this.userService.getUsers().subscribe((data) => {
+    //   this.users = data.map(e => {
+    //     return {
+    //       id: e.payload.doc.id,
+    //       ...e.payload.doc.data()
+    //     };
+    //   });
+    //   this.dataChair.name = this.userInfo.displayName;
+    //   this.dataChair.userId = 1234;
+    //   this.dataChair.chairId = 9876;
+    //   this.dataChair.isReserved = false;
+    // }, error => {
+    //   console.log(error);
+    // });
   }
 
   // Chair functions

@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
     location: 'Occidental wing'
   };
 
-  constructor(private userService: UserService, private chairService: ChairService, private reservationService: ReservationsService) {
+  constructor(private chairService: ChairService, private reservationService: ReservationsService) {
     this.modalProperties = {
       buttonText: 'Eliminar',
       function: 'Soy una función',

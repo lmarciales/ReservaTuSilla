@@ -4,7 +4,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatIconModule, MatToolbarModule, MatFormFieldModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -24,6 +24,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DateComponent } from './components/date/date.component';
 import { ReservationStateComponent } from './components/main/reservation-state/reservation-state.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
+import { AlertComponent } from './components/shared/alert/alert.component';
+import { EditReservationComponent } from './components/main/edit-reservation/edit-reservation.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { ConfirmationModalComponent } from './components/shared/confirmation-mod
     DateComponent,
     ReservationStateComponent,
     ConfirmationModalComponent,
-    AlertComponent
+    AlertComponent,
+    EditReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -53,9 +57,14 @@ import { ConfirmationModalComponent } from './components/shared/confirmation-mod
     FormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [],
+  entryComponents: [
+    EditReservationComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

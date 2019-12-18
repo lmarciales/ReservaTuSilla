@@ -1,23 +1,37 @@
-<div class="card-deck" *ngIf="information">
-  <div class="card reservation-data">
-    <img src="assets/img/calendar.svg" class="card-img-top reservation-icon" alt="Reservation date">
-    <div class="card-body">
-      <h5 class="card-title label">Date</h5>
-      <p class="card-text reservation-information">{{information.date}}</p>
+<div class="container">
+  <div class="row">
+    <button type="button" class="editable" data-toggle="dropdown" aria-haspopup="true"
+      aria-expanded="false">
+      <img src="assets/img/edit.svg" class="edit-icon" alt="Edit">
+    </button>
+    <div class="dropdown-menu dropdown-menu-right">
+      <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>
+      <button class="dropdown-item" type="button">Delete reservation</button>
     </div>
-  </div>
-  <div class="card reservation-data">
-    <img src="assets/img/clock.svg" class="card-img-top reservation-icon" alt="Reservation time">
-    <div class="card-body">
-      <h5 class="card-title label">Time</h5>
-      <p class="card-text reservation-information">{{information.timeStart}} - {{information.timeEnd}}</p>
-    </div>
-  </div>
-  <div class="card reservation-data">
-    <img src="assets/img/compass.svg" class="card-img-top reservation-icon" alt="Reservation location">
-    <div class="card-body">
-      <h5 class="card-title label">Location</h5>
-      <p class="card-text reservation-information">{{information.location}}</p>
+    <div class="col-12">
+      <div class="card-deck" *ngIf="information">
+        <div class="card reservation-data">
+          <img src="assets/img/calendar.svg" class="card-img-top reservation-icon" alt="Reservation date">
+          <div class="card-body">
+            <h5 class="card-title label">Date</h5>
+            <p class="card-text reservation-information">{{information.date}}</p>
+          </div>
+        </div>
+        <div class="card reservation-data">
+          <img src="assets/img/clock.svg" class="card-img-top reservation-icon" alt="Reservation time">
+          <div class="card-body">
+            <h5 class="card-title label">Time</h5>
+            <p class="card-text reservation-information">{{information.timeStart}} - {{information.timeEnd}}</p>
+          </div>
+        </div>
+        <div class="card reservation-data">
+          <img src="assets/img/compass.svg" class="card-img-top reservation-icon" alt="Reservation location">
+          <div class="card-body">
+            <h5 class="card-title label">Location</h5>
+            <p class="card-text reservation-information">{{information.location}}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

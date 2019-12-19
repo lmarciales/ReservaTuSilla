@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { chairModel } from 'src/app/model/chair.model';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '../main/home/home.component';
 
 
 @Component({

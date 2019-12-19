@@ -1,0 +1,11 @@
+.crud-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.crud-title {
+  font-size: 24px;
+  font-weight: bold;
+}

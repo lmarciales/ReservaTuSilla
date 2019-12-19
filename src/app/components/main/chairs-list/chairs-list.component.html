@@ -1,0 +1,30 @@
+<div class="container">
+  <app-alert [alerts]="alert"></app-alert>
+  <div class="crud-header">
+    <span class="crud-title">Chairs</span>
+    <button class="btn btn-primary" (click)="createChair()">Create</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">{{tableHeaders.description}}</th>
+        <th scope="col">{{tableHeaders.owner}}</th>
+        <th scope="col">{{tableHeaders.location}}</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let chair of chairList">
+        <th scope="row">{{chair.description}}</th>
+        <td>{{chair.owner}}</td>
+        <td>{{chair.location}}</td>
+        <td class="actions">
+          <i class="fas fa-pencil-alt"></i>
+          <i class="fas fa-trash-alt"></i>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

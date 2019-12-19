@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { HomeComponent } from '../home/home.component';
+import { HomeComponent } from '../main/home/home.component';
 import { reserveChair } from 'src/app/model/reserveChair.model';
 import { chairModel } from 'src/app/model/chair.model';
 

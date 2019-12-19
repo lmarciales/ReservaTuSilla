@@ -9,3 +9,13 @@
   font-size: 24px;
   font-weight: bold;
 }
+
+.actions {
+  text-align: center;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.actions i {
+  margin-right: 10px;
+}

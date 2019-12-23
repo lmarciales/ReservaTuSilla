@@ -28,6 +28,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { UsersListComponent } from './components/main/users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     ReservationStateComponent,
     ConfirmationModalComponent,
     AlertComponent,
-    ChairsListComponent
+    ChairsListComponent,
+    UsersListComponent
   ],
   imports: [
     BrowserModule,

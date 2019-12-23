@@ -1,11 +1,11 @@
 <div class="container">
-  <app-alert [alerts]="alert"></app-alert>
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
   <div class="crud-header">
     <span class="crud-title">Chairs</span>
     <button class="btn btn-primary" (click)="createChair()">Create</button>
   </div>
   <div class="table-responsive">
-    <table class="table">
+    <table class="table table-sm">
       <thead class="thead-light">
       <tr>
         <th scope="col">{{tableHeaders.description}}</th>
@@ -20,8 +20,8 @@
         <td>{{chair.owner}}</td>
         <td>{{chair.location}}</td>
         <td class="actions">
-          <i class="fas fa-pencil-alt"></i>
-          <i class="fas fa-trash-alt"></i>
+          <em class="fas fa-pencil-alt"></em>
+          <em class="fas fa-trash-alt" (click)="deleteChair(chair.id)"></em>
         </td>
       </tr>
       </tbody>

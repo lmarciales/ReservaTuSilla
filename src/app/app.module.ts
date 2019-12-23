@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { MatIconModule, MatToolbarModule, MatFormFieldModule } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -27,6 +27,8 @@ import { ReservationStateComponent } from './components/main/reservation-state/r
 import { ModalComponent } from './components/modal/modal.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
+import { EditReservationComponent } from './components/main/edit-reservation/edit-reservation.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { UsersListComponent } from './components/main/users-list/users-list.component';
 
@@ -46,6 +48,7 @@ import { UsersListComponent } from './components/main/users-list/users-list.comp
     AlertComponent,
     ChairsListComponent,
     UsersListComponent
+    EditReservationComponent
   ],
   imports: [
     BrowserModule,
@@ -62,9 +65,14 @@ import { UsersListComponent } from './components/main/users-list/users-list.comp
     FormsModule,
     MDBBootstrapModule.forRoot(),
     NgbModule,
-    DragDropModule
+    DragDropModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [],
+  entryComponents: [
+    EditReservationComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

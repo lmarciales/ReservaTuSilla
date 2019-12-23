@@ -30,6 +30,7 @@ import { ConfirmationModalComponent } from './components/shared/confirmation-mod
 import { EditReservationComponent } from './components/main/edit-reservation/edit-reservation.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { UsersListComponent } from './components/main/users-list/users-list.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,9 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     ReservationStateComponent,
     ConfirmationModalComponent,
     AlertComponent,
-    EditReservationComponent,
-    ChairsListComponent
+    ChairsListComponent,
+    UsersListComponent
+    EditReservationComponent
   ],
   imports: [
     BrowserModule,

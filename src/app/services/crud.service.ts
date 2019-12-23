@@ -17,7 +17,7 @@ export class CrudService {
   }
 
   getDocument(collection: string, id: string) {
-    return this.angularFirestore.doc(`${collection}/${id}`).snapshotChanges();
+    return this.angularFirestore.doc(`${collection}/${id}`).ref.get();
   }
 
   createDocument(collection: string, data: any) {

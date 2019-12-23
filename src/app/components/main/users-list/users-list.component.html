@@ -1,0 +1,30 @@
+<div class="container">
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
+  <div class="crud-header">
+    <span class="crud-title">Users</span>
+    <button class="btn btn-primary" (click)="createUser()">Create</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">{{tableHeaders.name}}</th>
+        <th scope="col">{{tableHeaders.email}}</th>
+        <th scope="col">{{tableHeaders.role}}</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of userList">
+        <th scope="row">{{user.name.firstname}} {{user.name.lastname}}</th>
+        <td>{{user.email}}</td>
+        <td>{{user.role}}</td>
+        <td class="actions">
+          <em class="fas fa-pencil-alt"></em>
+          <em class="fas fa-trash-alt" (click)="deleteUser(user.id)"></em>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -33,6 +33,23 @@ export class ChairsListComponent implements OnInit {
     this.getChairsList();
   }
 
+  getChairsList() {
+    this.crudService.getCollection(this.collectionName).subscribe(chairs => {
+      // @ts-ignore
+      this.chairList = chairs.map((e) => {
+        return {
+          id: e.payload.doc.id,
+          ...e.payload.doc.data()
+        };
+      });
+    }, error => {
+      this.alert = [{
+        type: 'danger',
+        message: 'Something went wrong: ' + error
+      }];
+    });
+  }
+
   createChair() {
     this.crudService.createDocument(this.collectionName, this.data)
       .then(() => {
@@ -49,20 +66,19 @@ export class ChairsListComponent implements OnInit {
       });
   }
 
-  getChairsList() {
-    this.crudService.getCollection(this.collectionName).subscribe(chairs => {
-      // @ts-ignore
-      this.chairList = chairs.map((e) => {
-        return {
-          id: e.payload.doc.id,
-          ...e.payload.doc.data()
-        };
+  deleteChair(chairId) {
+    this.crudService.deleteDocument(this.collectionName, chairId)
+      .then(() => {
+        this.alert = [{
+          type: 'success',
+          message: 'Chair deleted successfully!'
+        }];
+      })
+      .catch(error => {
+        this.alert = [{
+          type: 'danger',
+          message: 'Something went wrong: ' + error
+        }];
       });
-    }, error => {
-      this.alert = [{
-        type: 'danger',
-        message: 'Something went wrong: ' + error
-      }];
-    });
   }
 }

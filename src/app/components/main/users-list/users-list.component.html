@@ -20,7 +20,7 @@
         <td>{{user.email}}</td>
         <td>{{user.role}}</td>
         <td class="actions">
-          <em class="fas fa-pencil-alt"></em>
+          <em class="fas fa-pencil-alt" (click)="editUser(user)"></em>
           <em class="fas fa-trash-alt" (click)="deleteUser(user.id)"></em>
         </td>
       </tr>

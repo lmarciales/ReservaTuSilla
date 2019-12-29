@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
 import { AlertModel } from '../../../models/alert.model';
 import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { CrudService } from '../../../services/crud.service';
+import { AddUserComponent } from '../add-user/add-user.component';
 
 @Component({
   selector: 'app-users-list',
@@ -18,13 +20,13 @@ export class UsersListComponent implements OnInit {
   };
 
   public data: UserModel = {
-    email: '1@ibm.com',
-    password: '123456',
+    email: '',
+    password: '',
     name: {
-      firstname: 'Felipe',
-      lastname: 'Marciales'
+      firstname: '',
+      lastname: ''
     },
-    role: 'admin'
+    role: ''
   };
 
   public userList: any[];
@@ -32,7 +34,7 @@ export class UsersListComponent implements OnInit {
   private collectionName = 'users';
   private alertSubs;
 
-  constructor(private crudService: CrudService, private authService: AuthService) {
+  constructor(private crudService: CrudService, private authService: AuthService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -60,7 +62,21 @@ export class UsersListComponent implements OnInit {
   }
 
   createUser() {
-    this.authService.register(this.data);
+    // TODO: Llamar modal.
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      width: '600px'
+    });
+    
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== false) {
+        this.data.email = result.email ? result.email : '';
+        this.data.name.firstname = result.firstname ? result.firstname : '';
+        this.data.name.lastname = result.lastname ? result.lastname : '';
+        this.data.password = result.password ? result.password : '';
+        this.data.role = result.role ? result.role : '';
+        this.authService.register(this.data);
+      }
+    });
   }
 
   deleteUser(userId) {

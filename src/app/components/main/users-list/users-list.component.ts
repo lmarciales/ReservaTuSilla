@@ -62,11 +62,9 @@ export class UsersListComponent implements OnInit {
   }
 
   createUser() {
-    // TODO: Llamar modal.
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '600px'
     });
-    
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== false) {
         this.data.email = result.email ? result.email : '';
@@ -75,6 +73,34 @@ export class UsersListComponent implements OnInit {
         this.data.password = result.password ? result.password : '';
         this.data.role = result.role ? result.role : '';
         this.authService.register(this.data);
+      }
+    });
+  }
+
+  editUser(user: UserModel) {
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      width: '600px',
+      data: {
+        email: user.email,
+        password: user.password,
+        name: {
+          firstname: user.name.firstname,
+          lastname: user.name.lastname
+        },
+        role: user.role,
+        id: user.id
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== false) {
+        this.data.email = result.email ? result.email : '';
+        this.data.name.firstname = result.firstname ? result.firstname : '';
+        this.data.name.lastname = result.lastname ? result.lastname : '';
+        this.data.password = result.password ? result.password : '';
+        this.data.role = result.role ? result.role : '';
+        this.data.id = user.id;
+        console.log(this.data);
+        // TODO: LLAMAR FUNCIÓN DE FIREBASE PARA EDITAR USUARIO.
       }
     });
   }

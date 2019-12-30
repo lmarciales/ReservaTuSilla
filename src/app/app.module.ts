@@ -75,6 +75,7 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
   ],
   providers: [],
   entryComponents: [
+    ConfirmationModalComponent,
     EditReservationComponent,
     AddUserComponent
   ],

@@ -5,6 +5,7 @@ import { UserModel } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
 import { CrudService } from '../../../services/crud.service';
 import { AddUserComponent } from '../add-user/add-user.component';
+import { ConfirmationModalComponent } from '../../shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-users-list',
@@ -65,6 +66,7 @@ export class UsersListComponent implements OnInit {
     const dialogRef = this.dialog.open(AddUserComponent, {
       width: '600px'
     });
+    dialogRef.componentInstance.buttonText = 'Add user';
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== false) {
         this.data.email = result.email ? result.email : '';
@@ -91,8 +93,9 @@ export class UsersListComponent implements OnInit {
         id: user.id
       }
     });
+    dialogRef.componentInstance.buttonText = 'Edit user';
     dialogRef.afterClosed().subscribe((result) => {
-      if (result !== false) {
+      if (result !== undefined && result !== false) {
         this.data.email = result.email ? result.email : '';
         this.data.name.firstname = result.firstname ? result.firstname : '';
         this.data.name.lastname = result.lastname ? result.lastname : '';
@@ -101,12 +104,24 @@ export class UsersListComponent implements OnInit {
         this.data.id = user.id;
         console.log(this.data);
         // TODO: LLAMAR FUNCIÓN DE FIREBASE PARA EDITAR USUARIO.
+        this.authService.editUser(this.data);
       }
     });
   }
 
   deleteUser(userId) {
-    this.authService.deleteUser(userId);
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '600px',
+      data: {
+        buttonText: 'Delete',
+        modalText: 'Are you sure that you want to delete user?',
+        title: 'Delete user'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined && result === true) {
+        this.authService.deleteUser(userId);
+      }
+    });
   }
-
 }

@@ -34,9 +34,8 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private chairService: ChairService, private reservationService: ReservationsService) {
     this.modalProperties = {
       buttonText: 'Eliminar',
-      function: 'Soy una función',
       modalText: '¿Está seguro que desea eliminar este archivo?',
-      title: 'Eliminar función'
+      title: ''
     };
   }
 

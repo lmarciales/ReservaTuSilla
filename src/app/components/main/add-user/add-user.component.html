@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Create user</h1>
+<h1 mat-dialog-title>User data</h1>
 <div mat-dialog-content class="content-modal">
 
   <form [formGroup]="userForm" (ngSubmit)="onFormSubmit(userForm.value)">
@@ -70,9 +70,9 @@
       <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
         [mat-dialog-close]="false">Cancel</button>
     </div>
-    <div class="col">
+    <div class="col" *ngIf="buttonText">
       <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"
-        [mat-dialog-close]="userForm.value" [disabled]="userForm.status !== 'VALID'">Add user</button>
+        [mat-dialog-close]="userForm.value" [disabled]="userForm.status !== 'VALID'">{{buttonText}}</button>
     </div>
   </div>
 </div>

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AlertModel } from '../../../models/alert.model';
 import { ChairModel } from '../../../models/chair.model';
 import { CrudService } from '../../../services/crud.service';
-
+import { MatDialog } from '@angular/material';
+import { AddChairComponent } from 'src/app/components/main/add-chair/add-chair.component'
 @Component({
   selector: 'app-chairs-list',
   templateUrl: './chairs-list.component.html',
@@ -26,7 +27,7 @@ export class ChairsListComponent implements OnInit {
   public alert: AlertModel[];
   private collectionName = 'chairs';
 
-  constructor(private crudService: CrudService) {
+  constructor(private crudService: CrudService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -51,19 +52,30 @@ export class ChairsListComponent implements OnInit {
   }
 
   createChair() {
-    this.crudService.createDocument(this.collectionName, this.data)
-      .then(() => {
-        this.alert = [{
-          type: 'success',
-          message: 'Chair created successfully!'
-        }];
-      })
-      .catch(error => {
-        this.alert = [{
-          type: 'danger',
-          message: 'Something went wrong: ' + error
-        }];
-      });
+    const dialogRef = this.dialog.open(AddChairComponent, {
+      width: '600px'
+    });
+    dialogRef.componentInstance.buttonText = 'Add chair';
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined && result !== false) {
+        this.data.description = result.description ? result.description : '';
+        this.data.location = result.location ? result.location : '';
+        this.data.owner = result.owner ? result.owner : '';
+        this.crudService.createDocument(this.collectionName, this.data)
+        .then(() => {
+          this.alert = [{
+            type: 'success',
+            message: 'Chair created successfully!'
+          }];
+        })
+        .catch(error => {
+          this.alert = [{
+            type: 'danger',
+            message: 'Something went wrong: ' + error
+          }];
+        });
+      }
+    });
   }
 
   deleteChair(chairId) {

@@ -32,6 +32,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { AddChairComponent } from './components/main/add-chair/add-chair.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     ChairsListComponent,
     UsersListComponent,
     EditReservationComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddChairComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
   entryComponents: [
     ConfirmationModalComponent,
     EditReservationComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddChairComponent
   ],
   bootstrap: [AppComponent]
 })

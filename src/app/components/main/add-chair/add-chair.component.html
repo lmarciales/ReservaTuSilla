@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>Chairs information</h1>
+<div mat-dialog-content class="content-modal">
+
+  <form [formGroup]="chairForm" (ngSubmit)="onFormSubmit(chairForm.value)">
+
+    <p>Please enter the following information to create a user.</p>
+
+    <div class="form-group">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>Description</mat-label>
+              <input matInput placeholder="" formControlName="description">
+              <mat-icon matSuffix>description</mat-icon>
+              <mat-error>
+                <span *ngIf="!chairForm.get('description').valid && chairForm.get('description').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>Location</mat-label>
+              <input matInput placeholder="AB-1234" formControlName="location">
+              <mat-icon matSuffix>place</mat-icon>
+              <mat-error>
+                <span *ngIf="!chairForm.get('location').valid && chairForm.get('location').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>Chair owner</mat-label>
+              <mat-select placeholder="Select a owner" formControlName="owner">
+                <mat-option value="Mariana">Mariana</mat-option>
+                <mat-option value="Edgar">Edgar</mat-option>
+              </mat-select>
+              <mat-icon matSuffix>person_pin</mat-icon>
+              <mat-error>
+                <span *ngIf="!chairForm.get('owner').valid && chairForm.get('owner').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <div class="row footer-buttons">
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
+        [mat-dialog-close]="false">Cancel</button>
+    </div>
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"
+        [mat-dialog-close]="chairForm.value" [disabled]="chairForm.status !== 'VALID'">{{buttonText}}</button>
+    </div>
+  </div>
+</div>

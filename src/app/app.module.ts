@@ -32,6 +32,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { ConsultChairsComponent } from './components/main/consult-chairs/consult-chairs.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +50,8 @@ import { LayoutComponent } from './components/shared/layout/layout.component';
     ChairsListComponent,
     UsersListComponent,
     EditReservationComponent,
-    AddUserComponent
+    AddUserComponent,
+    ConsultChairsComponent
   ],
   imports: [
     BrowserModule,

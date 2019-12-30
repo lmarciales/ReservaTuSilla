@@ -1,21 +1,16 @@
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">{{properties.title}}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<h1 mat-dialog-title *ngIf="data.title">{{data.title}}</h1>
+<div mat-dialog-content class="content-modal" *ngIf="data.modalText">
+  <p>{{data.modalText}}</p>
+</div>
+<div mat-dialog-actions *ngIf="data.buttonText">
+  <div class="row footer-buttons">
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
+        [mat-dialog-close]="false">Cancel</button>
+    </div>
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"
+        [mat-dialog-close]="true">{{data.buttonText}}</button>
+    </div>
   </div>
-  <div class="modal-body">
-    <form>
-      <div class="form-group">
-        <label for="confirmation">{{properties.title}}</label>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-danger" (click)="modal.dismiss('')">Cancelar</button>
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close(properties.function)">Confirmar</button>
-  </div>
-</ng-template>
-<button class="btn btn-lg btn-outline-primary" *ngIf="properties" (click)="onModalActive(content)">{{properties.buttonText}}</button>
-<app-alert [alerts]="ALERTS" *ngIf="triggerAlert"></app-alert>
+</div>

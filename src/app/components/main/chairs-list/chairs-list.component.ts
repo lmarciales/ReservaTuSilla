@@ -94,7 +94,7 @@ export class ChairsListComponent implements OnInit {
     dialogRef.componentInstance.buttonText = 'Edit chair';
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined && result !== false) {
-        this.crudService.updateDocument(this.collectionName, result.id, result)
+        this.crudService.updateDocument(this.collectionName, chair.id, result)
         .then(() => {
           this.alert = [{
             type: 'success',

@@ -2,48 +2,8 @@
   <app-reservation-state [information]="dataReservation"></app-reservation-state>
 </div>
 
-<div class="container" *ngIf="userInfo">
+<hr>
 
-  <h2>Get user info</h2>
-  <p><b>Uid:</b> {{userInfo.uid}}</p>
-  <p><b>Name:</b> {{userInfo.displayName}}</p>
-  <p><b>Email:</b> {{userInfo.email}}</p>
-
-  <hr>
-
-  <h2>Get users</h2>
-  <div *ngFor="let user of users">
-    {{user.displayName}}
-  </div>
-
-  <hr>
-
-  <h2>Create chair</h2>
-  <label>Nombre </label>
-  <input type="text" [(ngModel)]="chairName">
-  <button (click)="createChair()">Crear</button>
-
-  <hr>
-
-  <h2>Update chair</h2>
-  <div *ngFor="let chair of chairs">
-    {{chair.name}} -
-    <button *ngIf="!chair.isReserved" (click)="takeChair(chair)">Take</button>
-  </div>
-
-  <hr>
-
-  <h2>Reservations</h2>
-  <div *ngFor="let reservation of reservations">
-    {{reservation.chairId}} by {{reservation.userId}}
-    <button (click)="leaveChair(reservation)">Leave</button>
-  </div>
-
-  <hr>
-
-  <h2>Delete chair</h2>
-  <div *ngFor="let chair of chairs">
-    {{chair.name}}
-    <button (click)="deleteChair(chair)">Delete</button>
-  </div>
-</div> -->
+<div>
+  <app-consult-chairs></app-consult-chairs>
+</div>

@@ -14,10 +14,10 @@
         <th scope="col"></th>
       </tr>
       </thead>
-      <tbody>
+      <tbody *ngIf="chairList">
       <tr *ngFor="let chair of chairList">
         <th scope="row">{{chair.description}}</th>
-        <td>{{chair.owner}}</td>
+        <td>{{chair.username.__zone_symbol__value}}</td>
         <td>{{chair.location}}</td>
         <td class="actions">
           <em class="fas fa-pencil-alt" (click)="editChair(chair)"></em>

@@ -1,0 +1,12 @@
+.mabo15 {
+  margin-bottom: 15px;
+}
+
+.align-col-center {
+  text-align: center;
+}
+
+.align-col-center .ngb-center {
+  display: flex;
+  justify-content: center !important;
+}

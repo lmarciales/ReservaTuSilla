@@ -33,6 +33,7 @@ import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
 import { ConsultChairsComponent } from './components/main/consult-chairs/consult-chairs.component';
+import { AddChairComponent } from './components/main/add-chair/add-chair.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +52,8 @@ import { ConsultChairsComponent } from './components/main/consult-chairs/consult
     UsersListComponent,
     EditReservationComponent,
     AddUserComponent,
-    ConsultChairsComponent
+    ConsultChairsComponent,
+    AddChairComponent
   ],
   imports: [
     BrowserModule,
@@ -77,8 +79,10 @@ import { ConsultChairsComponent } from './components/main/consult-chairs/consult
   ],
   providers: [],
   entryComponents: [
+    ConfirmationModalComponent,
     EditReservationComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddChairComponent
   ],
   bootstrap: [AppComponent]
 })

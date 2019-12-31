@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
+import { MatButtonToggleModule, MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
@@ -75,7 +75,8 @@ import { AddChairComponent } from './components/main/add-chair/add-chair.compone
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonToggleModule
   ],
   providers: [],
   entryComponents: [

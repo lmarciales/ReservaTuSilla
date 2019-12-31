@@ -102,8 +102,6 @@ export class UsersListComponent implements OnInit {
         this.data.password = result.password ? result.password : '';
         this.data.role = result.role ? result.role : '';
         this.data.id = user.id;
-        console.log(this.data);
-        // TODO: LLAMAR FUNCIÓN DE FIREBASE PARA EDITAR USUARIO.
         this.authService.editUser(this.data);
       }
     });

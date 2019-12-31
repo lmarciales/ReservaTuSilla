@@ -50,6 +50,16 @@
               </mat-error>
             </mat-form-field>
             <br>
+            <p>Edit password?</p>
+            <mat-button-toggle-group appearance="legacy" formControlName="editToggle" (click)="disablePasswordField()">
+              <mat-button-toggle value="yes" aria-label="Text align left">
+                Yes
+              </mat-button-toggle>
+              <mat-button-toggle value="no" aria-label="Text align right">
+                No
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            <br>
             <mat-form-field appearance="standard" class="field-form">
               <mat-label>Password</mat-label>
               <input type="password" matInput placeholder="••••••" formControlName="password">
@@ -68,7 +78,8 @@
   <div class="row footer-buttons">
     <div class="col">
       <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
-        [mat-dialog-close]="false">Cancel</button>
+        [mat-dialog-close]="false">Cancel
+      </button>
     </div>
     <div class="col" *ngIf="buttonText">
       <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"

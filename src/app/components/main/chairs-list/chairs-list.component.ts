@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { AddChairComponent } from 'src/app/components/main/add-chair/add-chair.component';
 import { AlertModel } from '../../../models/alert.model';
 import { ChairModel } from '../../../models/chair.model';
 import { CrudService } from '../../../services/crud.service';
-import { MatDialog } from '@angular/material';
-import { AddChairComponent } from 'src/app/components/main/add-chair/add-chair.component';
 import { ConfirmationModalComponent } from '../../shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
@@ -28,6 +28,7 @@ export class ChairsListComponent implements OnInit {
   public chairList: ChairModel[];
   public alert: AlertModel[];
   private collectionName = 'chairs';
+  private collectionUser = 'users';
 
   constructor(private crudService: CrudService, public dialog: MatDialog) {
   }
@@ -42,7 +43,15 @@ export class ChairsListComponent implements OnInit {
       this.chairList = chairs.map((e) => {
         return {
           id: e.payload.doc.id,
-          ...e.payload.doc.data()
+          ...e.payload.doc.data(),
+          // @ts-ignore
+          username: this.crudService.getDocument(this.collectionUser, e.payload.doc.data().owner).then(user => {
+            if (user && user.data()) {
+              const firstName = user.data().name.firstname;
+              const lastName = user.data().name.lastname;
+              return firstName + ' ' + lastName;
+            }
+          })
         };
       });
     }, error => {
@@ -64,24 +73,23 @@ export class ChairsListComponent implements OnInit {
         this.data.location = result.location ? result.location : '';
         this.data.owner = result.owner ? result.owner : '';
         this.crudService.createDocument(this.collectionName, this.data)
-        .then(() => {
-          this.alert = [{
-            type: 'success',
-            message: 'Chair created successfully!'
-          }];
-        })
-        .catch(error => {
-          this.alert = [{
-            type: 'danger',
-            message: 'Something went wrong: ' + error
-          }];
-        });
+          .then(() => {
+            this.alert = [{
+              type: 'success',
+              message: 'Chair created successfully!'
+            }];
+          })
+          .catch(error => {
+            this.alert = [{
+              type: 'danger',
+              message: 'Something went wrong: ' + error
+            }];
+          });
       }
     });
   }
 
   editChair(chair: ChairModel) {
-    console.log(chair);
     const dialogRef = this.dialog.open(AddChairComponent, {
       width: '600px',
       data: {
@@ -95,18 +103,18 @@ export class ChairsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result !== undefined && result !== false) {
         this.crudService.updateDocument(this.collectionName, chair.id, result)
-        .then(() => {
-          this.alert = [{
-            type: 'success',
-            message: 'Chair edited successfully!'
-          }];
-        })
-        .catch(error => {
-          this.alert = [{
-            type: 'danger',
-            message: 'Something went wrong: ' + error
-          }];
-        });
+          .then(() => {
+            this.alert = [{
+              type: 'success',
+              message: 'Chair edited successfully!'
+            }];
+          })
+          .catch(error => {
+            this.alert = [{
+              type: 'danger',
+              message: 'Something went wrong: ' + error
+            }];
+          });
       }
     });
   }

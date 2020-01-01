@@ -2,7 +2,8 @@
   <mat-toolbar-row>
     <img class="logo" src="../../../../assets/img/ibm.svg" alt="">
     <a routerLink="/dashboard/home" class="items">Home</a>
-    <a routerLink="/dashboard/administration" class="example-spacer">Administration</a>
+    <a *ngIf="enableAdminOpts" routerLink="/dashboard/administration">Administration</a>
+    <span class="example-spacer"></span>
     <ngx-auth-firebaseui-avatar (onSignOut)="logout()"></ngx-auth-firebaseui-avatar>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -46,7 +46,7 @@ export class AuthService {
           },
           role: newUser.role
         };
-        this.crudService.createDocument(this.collectionName, userData)
+        this.crudService.createDocumentWithId(this.collectionName, res.user.uid, userData)
           .then(() => {
             this.alert.next([{
               type: 'success',

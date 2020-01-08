@@ -34,4 +34,34 @@
       <button class="btn btn-primary" [disabled]="consultForm.invalid" (click)="onClick()">CONSULT</button>
     </div>
   </div>
+
+  <div *ngIf="availableChairs" class="consultTable">
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead class="thead-light">
+        <tr>
+          <th scope="col">{{tableHeaders.description}}</th>
+          <th scope="col">{{tableHeaders.location}}</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody *ngIf="chairList">
+        <tr *ngFor="let chair of availableChairs">
+          <th scope="row">{{chair.description}}</th>
+          <td>{{chair.location}}</td>
+          <td class="actions">
+            <em>Icono para crear reserva..</em>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
+
+Sillas disponibles:
+<pre>{{availableChairs | json}}</pre>
+Sillas:
+<pre>{{chairList | json}}</pre>
+Reservas:
+<pre>{{reservationList | json}}</pre>

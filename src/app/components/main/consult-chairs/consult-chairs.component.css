@@ -10,3 +10,18 @@
   display: flex;
   justify-content: center !important;
 }
+
+.consultTable {
+  margin: 20px auto;
+}
+
+.actions {
+  text-align: center;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.actions em {
+  cursor: pointer;
+  margin-right: 10px;
+}

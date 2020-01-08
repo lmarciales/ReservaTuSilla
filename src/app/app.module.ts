@@ -5,7 +5,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
+import { MatButtonToggleModule, MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,6 +32,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { AlertComponent } from './components/shared/alert/alert.component';
 import { ConfirmationModalComponent } from './components/shared/confirmation-modal/confirmation-modal.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { ConsultChairsComponent } from './components/main/consult-chairs/consult-chairs.component';
 import { AddChairComponent } from './components/main/add-chair/add-chair.component';
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AddChairComponent } from './components/main/add-chair/add-chair.compone
     UsersListComponent,
     EditReservationComponent,
     AddUserComponent,
+    ConsultChairsComponent,
     AddChairComponent
   ],
   imports: [
@@ -73,7 +75,8 @@ import { AddChairComponent } from './components/main/add-chair/add-chair.compone
     MatFormFieldModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonToggleModule
   ],
   providers: [],
   entryComponents: [

@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UserModel } from '../../../models/user.model';
-
 
 @Component({
   selector: 'app-add-user',
@@ -22,6 +21,7 @@ export class AddUserComponent implements OnInit {
       lastname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30), Validators.pattern('^[a-zA-Z ]*$')]],
       role: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.email]],
+      editToggle: ['yes', Validators.required],
       password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(15)]]
     });
   }
@@ -31,6 +31,16 @@ export class AddUserComponent implements OnInit {
     this.userForm.controls.lastname.setValue(this.data ? this.data.name.lastname : '');
     this.userForm.controls.role.setValue(this.data ? this.data.role : '');
     this.userForm.controls.email.setValue(this.data ? this.data.email : '');
-    this.userForm.controls.password.setValue(this.data ? this.data.password : '');
+    this.userForm.controls.password.setValue('');
+  }
+
+  disablePasswordField() {
+    if (this.userForm) {
+      if (this.userForm.get('editToggle').value === 'no') {
+        this.userForm.controls.password.disable();
+      } else {
+        this.userForm.controls.password.enable();
+      }
+    }
   }
 }

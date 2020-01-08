@@ -6,7 +6,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class CrudService {
 
-  constructor(private angularFirestore: AngularFirestore) { }
+  constructor(private angularFirestore: AngularFirestore) {
+  }
 
   getCollection(collection: string) {
     return this.angularFirestore.collection(collection).snapshotChanges();
@@ -22,6 +23,10 @@ export class CrudService {
 
   createDocument(collection: string, data: any) {
     return this.angularFirestore.collection(collection).add(data);
+  }
+
+  createDocumentWithId(collection: string, id: string, data: any) {
+    return this.angularFirestore.collection(collection).doc(id).set(data);
   }
 
   updateDocument(collection: string, id: string, data: any) {

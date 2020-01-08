@@ -46,7 +46,7 @@ export class AuthService {
           },
           role: newUser.role
         };
-        this.crudService.createDocument(this.collectionName, userData)
+        this.crudService.createDocumentWithId(this.collectionName, res.user.uid, userData)
           .then(() => {
             this.alert.next([{
               type: 'success',
@@ -70,22 +70,31 @@ export class AuthService {
 
   editUser(user: UserModel) {
     this.crudService.getDocument(this.collectionName, user.id)
-    .then(doc => {
-      if (doc.exists) {
-        const email = doc.data().email;
-        const password = atob(doc.data().password);
-        this.detachedAuth.signInWithEmailAndPassword(email, password)
-        .then((res) => {
-          res.user.updateEmail(email);
-          res.user.updatePassword(password);
-          console.log(res);
-          this.crudService.updateDocument(this.collectionName, user.id, user)
-            .then(() => {
-              this.alert.next([{
-                type: 'success',
-                message: 'User update successfully!'
-              }]);
-              this.detachedAuth.signOut();
+      .then(doc => {
+        if (doc.exists) {
+          const email = doc.data().email;
+          const password = atob(doc.data().password);
+          this.detachedAuth.signInWithEmailAndPassword(email, password)
+            .then((res) => {
+              res.user.updateEmail(user.email);
+              res.user.updatePassword(user.password);
+              if (user.password === '') {
+                user.password = password;
+              }
+              user.password = btoa(user.password);
+              this.crudService.updateDocument(this.collectionName, user.id, user)
+                .then(() => {
+                  this.alert.next([{
+                    type: 'success',
+                    message: 'User update successfully!'
+                  }]);
+                })
+                .catch(error => {
+                  this.alert.next([{
+                    type: 'danger',
+                    message: 'Something went wrong: ' + error
+                  }]);
+                });
             })
             .catch(error => {
               this.alert.next([{
@@ -93,21 +102,15 @@ export class AuthService {
                 message: 'Something went wrong: ' + error
               }]);
             });
-        })
-        .catch(error => {
-          this.alert.next([{
-            type: 'danger',
-            message: 'Something went wrong: ' + error
-          }]);
-        });
-      }
-    })
-    .catch(error => {
-      this.alert.next([{
-        type: 'danger',
-        message: 'Something went wrong: ' + error
-      }]);
-    });
+          this.detachedAuth.signOut();
+        }
+      })
+      .catch(error => {
+        this.alert.next([{
+          type: 'danger',
+          message: 'Something went wrong: ' + error
+        }]);
+      });
   }
 
   deleteUser(userId) {

@@ -5,6 +5,7 @@ import { AdministrationComponent } from './components/main/administration/admini
 import { HomeComponent } from './components/main/home/home.component';
 import { LoginComponent } from './components/main/login/login.component';
 import { LayoutComponent } from './components/shared/layout/layout.component';
+import { RoleGuard } from './services/role.guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
 const redirectLoggedInToHome = () => redirectLoggedInTo(['dashboard']);
@@ -37,7 +38,7 @@ export const routes: Routes = [
       {
         path: 'administration',
         component: AdministrationComponent,
-        canActivate: [AngularFireAuthGuard],
+        canActivate: [AngularFireAuthGuard, RoleGuard],
         data: { authGuardPipe: redirectUnauthorizedToLogin }
       },
       { path: '',

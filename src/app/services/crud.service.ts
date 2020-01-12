@@ -21,6 +21,10 @@ export class CrudService {
     return this.angularFirestore.doc(`${collection}/${id}`).ref.get();
   }
 
+  getDocumentByParam(collection: string, id: string) {
+    return this.angularFirestore.collection(collection, ref => ref.where('userId', '==', id)).snapshotChanges();
+  }
+
   createDocument(collection: string, data: any) {
     return this.angularFirestore.collection(collection).add(data);
   }

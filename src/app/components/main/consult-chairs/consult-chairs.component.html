@@ -50,7 +50,7 @@
           <th scope="row">{{chair.description}}</th>
           <td>{{chair.location}}</td>
           <td class="actions">
-            <em>Icono para crear reserva..</em>
+            <mat-icon matSuffix (click)="createReservation(chair)">add</mat-icon>
           </td>
         </tr>
         </tbody>

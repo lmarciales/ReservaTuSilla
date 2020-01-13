@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { ConfirmationModalComponent } from 'src/app/components/shared/confirmation-modal/confirmation-modal.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { AlertModel } from '../../../models/alert.model';
 import { ChairModel } from '../../../models/chair.model';
 import { DateModel, TimeModel } from '../../../models/date-time.model';
 import { ReservationModel } from '../../../models/reservation.model';
 import { CrudService } from '../../../services/crud.service';
 import { UtilService } from '../../../services/util.service';
-import { MatDialog } from '@angular/material';
-import { ConfirmationModalComponent } from 'src/app/components/shared/confirmation-modal/confirmation-modal.component';
-import { AuthService } from 'src/app/services/auth.service';
-import { AlertModel } from '../../../models/alert.model';
 
 @Component({
   selector: 'app-consult-chairs',
@@ -83,40 +83,43 @@ export class ConsultChairsComponent implements OnInit {
     this.getReservationList();
   }
 
-  ngOnInit() {
-    this.user.currentUser.subscribe((data) => { this.uid = data.uid; });
-    this._buildForm();
-  }
-
   private static _checkDates(resDay, resMonth, resYear, selDay, selMonth, selYear): boolean {
     return (resDay === selDay && resMonth === selMonth && resYear === selYear);
   }
 
   private static _checkTimeRanges(resSTime, resETime, selSTime, selETime): boolean {
-    return (!(resSTime < selSTime && resETime > selSTime) && !(resSTime < selETime && resETime > selETime));
+    return ((resSTime < selSTime && resETime <= selSTime) && (resSTime < selETime && resETime < selETime) ||
+      (resSTime > selSTime && resETime > selSTime) && (resSTime >= selETime && resETime > selETime)) &&
+      (resSTime !== selSTime && resETime !== selETime);
   }
 
+  ngOnInit() {
+    this.user.currentUser.subscribe((data) => {
+      this.uid = data.uid;
+    });
+    this._buildForm();
+  }
 
   public onClick() {
     this.availableChairs = [];
     const responseForm = this.consultForm.value;
     for (const chair of this.chairList) {
-      const temp: ReservationModel = this.reservationList.find(reservation => reservation.chairId === chair.uid);
-      if (temp && chair.owner === 'free') {
-        if (ConsultChairsComponent._checkDates(
-          temp.date.day, temp.date.month,
-          temp.date.year,
-          responseForm.date.day,
-          responseForm.date.month,
-          responseForm.date.year)) {
-          if (ConsultChairsComponent._checkTimeRanges(temp.sTime.hour, temp.eTime.hour, responseForm.sTime.hour, responseForm.eTime.hour)) {
+      const temp: ReservationModel = this.reservationList.find(reservation => reservation.chairId === chair.id);
+      if (responseForm.sTime.hour < responseForm.eTime.hour ||
+        (responseForm.sTime.hour < responseForm.eTime.hour && responseForm.sTime.minute < responseForm.eTime.minute)) {
+        if (temp && chair.owner === 'free') {
+          if (ConsultChairsComponent._checkDates(temp.date.day, temp.date.month, temp.date.year, responseForm.date.day,
+            responseForm.date.month, responseForm.date.year)) {
+            if (ConsultChairsComponent._checkTimeRanges(temp.sTime.hour, temp.eTime.hour, responseForm.sTime.hour,
+              responseForm.eTime.hour)) {
+              this.availableChairs.push(chair);
+            }
+          } else {
             this.availableChairs.push(chair);
           }
         } else {
           this.availableChairs.push(chair);
         }
-      } else {
-        this.availableChairs.push(chair);
       }
     }
   }
@@ -145,14 +148,6 @@ export class ConsultChairsComponent implements OnInit {
     });
   }
 
-  private _buildForm() {
-    this.consultForm = this.fb.group({
-      date: [this.currentDate, (control: FormControl) => this.utilService.validateDateInput(control)],
-      sTime: [this.startTime, (control: FormControl) => this.utilService.validateTimeInput(control)],
-      eTime: [this.endTime, (control: FormControl) => this.utilService.validateTimeInput(control)]
-    });
-  }
-
   createReservation(chair: ChairModel) {
     this.crudService.getDocumentByParam(this.collectionName, this.uid, 'userId').subscribe(reservation => {
       // @ts-ignore
@@ -172,6 +167,14 @@ export class ConsultChairsComponent implements OnInit {
       } else {
         this.openModalNoReservation();
       }
+    });
+  }
+
+  private _buildForm() {
+    this.consultForm = this.fb.group({
+      date: [this.currentDate, (control: FormControl) => this.utilService.validateDateInput(control)],
+      sTime: [this.startTime, (control: FormControl) => this.utilService.validateTimeInput(control)],
+      eTime: [this.endTime, (control: FormControl) => this.utilService.validateTimeInput(control)]
     });
   }
 

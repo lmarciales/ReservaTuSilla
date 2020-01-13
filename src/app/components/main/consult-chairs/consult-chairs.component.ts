@@ -169,9 +169,10 @@ export class ConsultChairsComponent implements OnInit {
       });
       if (!(Array.isArray(reservationUser) && reservationUser.length)) {
         this.openModalReservation(chair);
+      } else {
+        this.openModalNoReservation();
       }
     });
-    this.openModalNoReservation();
   }
 
   private openModalReservation(chair: ChairModel) {

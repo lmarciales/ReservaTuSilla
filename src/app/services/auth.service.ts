@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment.prod';
 import { AlertModel } from '../models/alert.model';
 import { UserModel } from '../models/user.model';
 import { CrudService } from './crud.service';
+import { ReleaseChairService } from './release-chair.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,12 @@ export class AuthService {
   collectionName = 'users';
   alert: Subject<AlertModel[]> = new Subject<AlertModel[]>();
 
-  constructor(private angularFireAuth: AngularFireAuth, private crudService: CrudService, private router: Router) {
+  constructor(private angularFireAuth: AngularFireAuth, private crudService: CrudService, private router: Router,
+              private releaseChairService: ReleaseChairService) {
     this.authState = angularFireAuth.authState;
     this.detachedAuth = this.authApp.auth();
+
+    releaseChairService.removeOutdatedReservations();
   }
 
   // Returns true if user is logged in

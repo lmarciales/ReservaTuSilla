@@ -3,9 +3,11 @@ import { MatDialog } from '@angular/material';
 import { EditReservationComponent } from 'src/app/components/main/edit-reservation/edit-reservation.component';
 import { ReservationView } from 'src/app/model/reservationView.model';
 import { ReservationModel } from 'src/app/models/reservation.model';
+import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AlertModel } from '../../../models/alert.model';
-import { AuthService } from 'src/app/services/auth.service';
+import { ChairModel } from '../../../models/chair.model';
+import { ChairService } from 'src/app/services/chair.service';
 
 @Component({
   selector: 'app-reservation-state',
@@ -17,9 +19,9 @@ export class ReservationStateComponent implements OnInit {
   @Input() information: ReservationView;
 
   private uid: string;
-
   collectionName: string;
   editable: boolean;
+  chairs: ChairModel[];
   public alert: AlertModel[];
   reservation: ReservationModel = {
     date: {
@@ -39,16 +41,15 @@ export class ReservationStateComponent implements OnInit {
     chairId: ''
   };
 
-  constructor(public dialog: MatDialog, private crudService: CrudService, private user: AuthService) {
+  constructor(public dialog: MatDialog, private crudService: CrudService, private user: AuthService, private chair: ChairService) {
+    this.user.currentUser.subscribe((data) => { this.uid = data.uid; });
     this.editable = false;
     this.collectionName = 'reservation';
   }
 
   ngOnInit() {
-    this.user.currentUser.subscribe((data) => { this.uid = data.uid; });
     this.getReservations();
-    // this.createReservation();
-    this.deleteChair("LZsvYX9klTlbVAPbZClU");
+    this.deleteChair("TSF5C4BzzzNxcpCH0XCc");
   }
 
   public editReservation() {
@@ -66,7 +67,7 @@ export class ReservationStateComponent implements OnInit {
   }
 
   getReservations() {
-    this.crudService.getDocumentByParam(this.collectionName, '45gUQmCRxggo6GhXeJILrAZ2TU73').subscribe(reservation => {
+    this.crudService.getDocumentByParam(this.collectionName, this.uid, 'userId').subscribe(reservation => {
       // @ts-ignore
       this.reservation = reservation.map((e) => {
         return {
@@ -74,7 +75,21 @@ export class ReservationStateComponent implements OnInit {
           ...e.payload.doc.data()
         };
       });
-      console.log(this.reservation);
+      this.crudService.getDocumentByParam('chairs', this.reservation[0].chairId, 'id').subscribe((chairResponse) => {
+        // @ts-ignore
+        this.chairs = chairResponse.map((e) => {
+          return {
+            id: e.payload.doc.id,
+            ...e.payload.doc.data()
+          };
+        });
+        console.log(this.chairs);
+      }, error => {
+        this.alert = [{
+          type: 'danger',
+          message: 'Something went wrong: ' + error
+        }];
+      });
     }, error => {
       this.alert = [{
         type: 'danger',
@@ -83,21 +98,7 @@ export class ReservationStateComponent implements OnInit {
     });
   }
 
-  createReservation() {
-    this.crudService.createDocument(this.collectionName, this.reservation).then(() => {
-      this.alert = [{
-        type: 'success',
-        message: 'Chair created successfully!'
-      }];
-      console.log('bien');
-    }).catch(error => {
-      console.log(error);
-      this.alert = [{
-        type: 'danger',
-        message: 'Something went wrong: ' + error
-      }];
-    });
-  }
+
 
   // editChair(chair: ChairModel) {
   //   console.log(chair);

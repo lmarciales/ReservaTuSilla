@@ -1,37 +1,55 @@
 <div class="container">
-  <div class="row">
-    <button type="button" class="editable" data-toggle="dropdown" aria-haspopup="true"
-      aria-expanded="false">
-      <img src="assets/img/edit.svg" class="edit-icon" alt="Edit">
-    </button>
-    <div class="dropdown-menu dropdown-menu-right">
-      <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>
-      <button class="dropdown-item" type="button">Delete reservation</button>
+  <ng-container *ngIf="reservation[0]; else noReservation">
+    <div class="row">
+      <h4>
+        Welcome back, friend. Your reservation information is as follows:
+      </h4>
     </div>
-    <div class="col-12">
-      <div class="card-deck" *ngIf="information">
-        <div class="card reservation-data">
-          <img src="assets/img/calendar.svg" class="card-img-top reservation-icon" alt="Reservation date">
-          <div class="card-body">
-            <h5 class="card-title label">Date</h5>
-            <p class="card-text reservation-information">{{information.date}}</p>
+    <br>
+    <div class="row">
+      <button type="button" class="editable" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="assets/img/edit.svg" class="edit-icon" alt="Edit">
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>
+        <button class="dropdown-item" type="button">Delete reservation</button>
+      </div>
+      <div class="col-12">
+        <div class="card-deck">
+          <div class="card reservation-data">
+            <img src="assets/img/calendar.svg" class="card-img-top reservation-icon" alt="Reservation date">
+            <div class="card-body">
+              <h5 class="card-title label">Date</h5>
+              <p class="card-text reservation-information">
+                {{reservation[0].date.day}}/{{reservation[0].date.month}}/{{reservation[0].date.year}}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="card reservation-data">
-          <img src="assets/img/clock.svg" class="card-img-top reservation-icon" alt="Reservation time">
-          <div class="card-body">
-            <h5 class="card-title label">Time</h5>
-            <p class="card-text reservation-information">{{information.timeStart}} - {{information.timeEnd}}</p>
+          <div class="card reservation-data">
+            <img src="assets/img/clock.svg" class="card-img-top reservation-icon" alt="Reservation time">
+            <div class="card-body">
+              <h5 class="card-title label">Time</h5>
+              <p class="card-text reservation-information">
+                {{reservation[0].sTime.hour}}:{{reservation[0].sTime.minute < 10 ? '0' +reservation[0].sTime.minute : reservation[0].sTime.minute}}
+                -
+                {{reservation[0].eTime.hour}}:{{reservation[0].eTime.minute < 10 ? '0' +reservation[0].eTime.minute : reservation[0].eTime.minute}}
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="card reservation-data">
-          <img src="assets/img/compass.svg" class="card-img-top reservation-icon" alt="Reservation location">
-          <div class="card-body">
-            <h5 class="card-title label">Location</h5>
-            <p class="card-text reservation-information">{{information.location}}</p>
+          <div class="card reservation-data">
+            <img src="assets/img/compass.svg" class="card-img-top reservation-icon" alt="Reservation location">
+            <div class="card-body">
+              <h5 class="card-title label">Location</h5>
+              <p class="card-text reservation-information">{{information.location}}</p>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
+  <ng-template #noReservation>
+    <h4>
+      Welcome back, friend. Apparently you have no reservations, run to look for.
+    </h4>
+  </ng-template>
 </div>

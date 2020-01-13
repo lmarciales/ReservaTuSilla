@@ -154,59 +154,65 @@ export class ConsultChairsComponent implements OnInit {
   }
 
   createReservation(chair: ChairModel) {
-    this.crudService.getDocumentByParam(this.collectionName, this.uid).subscribe(reservation => {
+    this.crudService.getDocumentByParam(this.collectionName, this.uid, 'userId').subscribe(reservation => {
       // @ts-ignore
-      this.reservationUser = reservation.map((e) => {
+      const reservationUser = reservation.map((e) => {
         return {
           id: e.payload.doc.id,
           ...e.payload.doc.data()
         };
+      }, error => {
+        this.alert = [{
+          type: 'danger',
+          message: 'Something went wrong: ' + error
+        }];
       });
-    }, error => {
-      this.alert = [{
-        type: 'danger',
-        message: 'Something went wrong: ' + error
-      }];
+      if (!(Array.isArray(reservationUser) && reservationUser.length)) {
+        this.openModalReservation(chair);
+      }
     });
-    console.log(this.reservationUser);
-    if (this.reservationUser !== undefined) {
-      const dialogRefNo = this.dialog.open(ConfirmationModalComponent, {
-        width: '600px',
-        data: {
-          buttonText: 'Return',
-          modalText: 'You have an active reservation at this time and therefore you cannot book.',
-          title: 'Active booking'
-        }
-      });
-    } else {
-      const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-        width: '600px',
-        data: {
-          buttonText: 'Create reservation',
-          modalText: 'Are you sure that you want to create this reservation?',
-          title: 'Add reservation'
-        }
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result !== undefined && result === true) {
-          this.reservation.chairId = chair.id;
-          this.reservation.userId = this.uid;
-          this.reservation.date = this.consultForm.value.date;
-          this.reservation.sTime = this.consultForm.value.sTime;
-          this.reservation.eTime = this.consultForm.value.eTime;
-          this.crudService.createDocument(this.collectionName, this.reservation).then(() => {
-            this.alert = [{
-              type: 'success',
-              message: 'Chair created successfully!'
-            }];
-          }).catch(error => {
-            this.alert = [{
-              type: 'danger',
-              message: 'Something went wrong: ' + error
-            }];
-          });
-        }
-      });
-    }
+    this.openModalNoReservation();
+  }
+
+  private openModalReservation(chair: ChairModel) {
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      width: '600px',
+      data: {
+        buttonText: 'Create reservation',
+        modalText: 'Are you sure that you want to create this reservation?',
+        title: 'Add reservation'
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result !== undefined && result === true) {
+        this.reservation.chairId = chair.id;
+        this.reservation.userId = this.uid;
+        this.reservation.date = this.consultForm.value.date;
+        this.reservation.sTime = this.consultForm.value.sTime;
+        this.reservation.eTime = this.consultForm.value.eTime;
+        this.crudService.createDocument(this.collectionName, this.reservation).then(() => {
+          this.alert = [{
+            type: 'success',
+            message: 'Chair created successfully!'
+          }];
+        }).catch(error => {
+          this.alert = [{
+            type: 'danger',
+            message: 'Something went wrong: ' + error
+          }];
+        });
+      }
+    });
+  }
+
+  private openModalNoReservation() {
+    this.dialog.open(ConfirmationModalComponent, {
+      width: '600px',
+      data: {
+        buttonText: 'Return',
+        modalText: 'You have an active reservation at this time and therefore you cannot book.',
+        title: 'Active booking'
+      }
+    });
   }
 }

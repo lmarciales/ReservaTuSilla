@@ -1,0 +1,89 @@
+<h1 mat-dialog-title>User data</h1>
+<div mat-dialog-content class="content-modal">
+
+  <form [formGroup]="userForm" (ngSubmit)="onFormSubmit(userForm.value)">
+
+    <p>Please enter the following information to create a user.</p>
+
+    <div class="form-group">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>User name</mat-label>
+              <input matInput placeholder="Jhon Alexander" formControlName="firstname">
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <mat-error>
+                <span *ngIf="!userForm.get('firstname').valid && userForm.get('firstname').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>User surname</mat-label>
+              <input matInput placeholder="Marciales Piñeros" formControlName="lastname">
+              <mat-icon matSuffix>perm_identity</mat-icon>
+              <mat-error>
+                <span *ngIf="!userForm.get('lastname').valid && userForm.get('lastname').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>User role</mat-label>
+              <mat-select placeholder="Select a role" formControlName="role">
+                <mat-option value="admin">Admin</mat-option>
+                <mat-option value="user">User</mat-option>
+              </mat-select>
+              <mat-icon matSuffix>people</mat-icon>
+              <mat-error>
+                <span *ngIf="!userForm.get('role').valid && userForm.get('role').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col">
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="jhon@ibm.com" formControlName="email">
+              <mat-icon matSuffix>email</mat-icon>
+              <mat-error>
+                <span *ngIf="!userForm.get('email').valid && userForm.get('email').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+            <br>
+            <p>Edit password?</p>
+            <mat-button-toggle-group appearance="legacy" formControlName="editToggle" (click)="disablePasswordField()">
+              <mat-button-toggle value="yes" aria-label="Text align left">
+                Yes
+              </mat-button-toggle>
+              <mat-button-toggle value="no" aria-label="Text align right">
+                No
+              </mat-button-toggle>
+            </mat-button-toggle-group>
+            <br>
+            <mat-form-field appearance="standard" class="field-form">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput placeholder="••••••" formControlName="password">
+              <mat-icon matSuffix>https</mat-icon>
+              <mat-error>
+                <span *ngIf="!userForm.get('password').valid && userForm.get('password').touched">Wrong field</span>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <div class="row footer-buttons">
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
+        [mat-dialog-close]="false">Cancel
+      </button>
+    </div>
+    <div class="col" *ngIf="buttonText">
+      <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"
+        [mat-dialog-close]="userForm.value" [disabled]="userForm.status !== 'VALID'">{{buttonText}}</button>
+    </div>
+  </div>
+</div>

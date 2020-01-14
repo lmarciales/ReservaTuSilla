@@ -1,0 +1,16 @@
+<h1 mat-dialog-title *ngIf="data.title">{{data.title}}</h1>
+<div mat-dialog-content class="content-modal" *ngIf="data.modalText">
+  <p>{{data.modalText}}</p>
+</div>
+<div mat-dialog-actions *ngIf="data.buttonText">
+  <div class="row footer-buttons">
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-primary btn-lg button-modal"
+        [mat-dialog-close]="false">Cancel</button>
+    </div>
+    <div class="col">
+      <button type="button" mat-button class="btn btn-outline-success btn-lg button-modal"
+        [mat-dialog-close]="true">{{data.buttonText}}</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+.position-alert {
+  position: absolute;
+  top: 82px;
+  right: 52px;
+  z-index: 1052;
+}

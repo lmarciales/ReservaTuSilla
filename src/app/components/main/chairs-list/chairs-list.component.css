@@ -1,0 +1,20 @@
+.crud-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.crud-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+.actions {
+  text-align: center;
+  padding-right: 0;
+  padding-left: 0;
+  min-width: 80px;
+}
+.actions em {
+  cursor: pointer;
+  margin-right: 12px;
+}

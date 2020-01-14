@@ -1,0 +1,32 @@
+<div class="date-model">
+  <div class="row edit-container">
+    <div class="col-lg-4">
+      <p>Date of reserve</p>
+      <ngb-datepicker [(ngModel)]="date"></ngb-datepicker>
+    </div>
+    <div class="col-lg-4">
+      <div class="set-time">
+        <label class="label-time">Start time</label>
+        <ngb-timepicker [(ngModel)]="startTime"></ngb-timepicker>
+      </div>
+      <div class="set-time">
+        <label class="label-time">End time</label>
+        <ngb-timepicker [(ngModel)]="endTime"></ngb-timepicker>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <label for="dateOfReserve">Location of reserve</label><br>
+      <div class="dropdown">
+        <button class="btn btn-outline-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Chairs
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </div><br>
+    </div>
+  </div>
+</div>

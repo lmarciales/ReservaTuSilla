@@ -1,0 +1,30 @@
+<div class="container">
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
+  <div class="crud-header">
+    <span class="crud-title">Chairs</span>
+    <button class="btn btn-primary" (click)="createChair()">Create</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">{{tableHeaders.description}}</th>
+        <th scope="col">{{tableHeaders.owner}}</th>
+        <th scope="col">{{tableHeaders.location}}</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody *ngIf="chairList">
+      <tr *ngFor="let chair of chairList">
+        <th scope="row">{{chair.description}}</th>
+        <td>{{chair.username.__zone_symbol__value}}</td>
+        <td>{{chair.location}}</td>
+        <td class="actions">
+          <em class="fas fa-pencil-alt" (click)="editChair(chair)"></em>
+          <em class="fas fa-trash-alt" (click)="deleteChair(chair.id)"></em>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

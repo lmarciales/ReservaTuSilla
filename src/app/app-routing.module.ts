@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { AngularFireAuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
+import { AdministrationComponent } from './components/main/administration/administration.component';
+import { HomeComponent } from './components/main/home/home.component';
+import { LoginComponent } from './components/main/login/login.component';
+import { LayoutComponent } from './components/shared/layout/layout.component';
+import { RoleGuard } from './services/role.guard';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['login']);
-const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
+const redirectLoggedInToHome = () => redirectLoggedInTo(['dashboard']);
 
 export const routes: Routes = [
   {
@@ -23,11 +26,25 @@ export const routes: Routes = [
     data: { authGuardPipe: redirectLoggedInToHome }
   },
   {
-    path: 'home',
-    component: HomeComponent,
-    children: [],
-    canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+    path: 'dashboard',
+    component: LayoutComponent,
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent,
+        canActivate: [AngularFireAuthGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+      },
+      {
+        path: 'administration',
+        component: AdministrationComponent,
+        canActivate: [AngularFireAuthGuard, RoleGuard],
+        data: { authGuardPipe: redirectUnauthorizedToLogin }
+      },
+      { path: '',
+        redirectTo: 'home',
+        pathMatch: 'full' }
+    ]
   }
 ];
 

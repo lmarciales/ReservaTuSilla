@@ -1,0 +1,30 @@
+.editable {
+  background: none;
+  border: none;
+  outline: none;
+  position: absolute;
+  right: calc(0% + 75px);
+  z-index: 1;
+}
+.editable .edit-icon {
+  border-radius: 50%;
+  border: solid 3px #000000;
+  min-width: 37px;
+  padding: 2px;
+  position: absolute;
+  top: 0px;
+}
+.reservation-data {
+  align-items: center;
+  border: none;
+  text-align: center;
+}
+.reservation-data .reservation-icon {
+  max-width: 70px;
+}
+.reservation-data .label {
+  margin-bottom: -0.25rem;
+}
+.reservation-data .reservation-information {
+  font-size: 24px;
+}

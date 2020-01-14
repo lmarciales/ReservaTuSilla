@@ -1,0 +1,27 @@
+.mabo15 {
+  margin-bottom: 15px;
+}
+
+.align-col-center {
+  text-align: center;
+}
+
+.align-col-center .ngb-center {
+  display: flex;
+  justify-content: center !important;
+}
+
+.consultTable {
+  margin: 20px auto;
+}
+
+.actions {
+  text-align: center;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.actions em {
+  cursor: pointer;
+  margin-right: 10px;
+}

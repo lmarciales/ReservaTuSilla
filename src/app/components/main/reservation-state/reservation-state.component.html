@@ -1,5 +1,6 @@
 <div class="container">
-  <ng-container *ngIf="reservation[0]; else noReservation">
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
+  <ng-container *ngIf="(reservation !== undefined && reservation.length > 0); else noReservation">
     <div class="row">
       <h4>
         Welcome back, friend. Your reservation information is as follows:
@@ -12,7 +13,7 @@
       </button>
       <div class="dropdown-menu dropdown-menu-right">
         <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>
-        <button class="dropdown-item" type="button">Delete reservation</button>
+        <button class="dropdown-item" type="button" (click)="deleteReservation(reservation[0].id)">Delete reservation</button>
       </div>
       <div class="col-12">
         <div class="card-deck">
@@ -40,7 +41,7 @@
             <img src="assets/img/compass.svg" class="card-img-top reservation-icon" alt="Reservation location">
             <div class="card-body">
               <h5 class="card-title label">Location</h5>
-              <p class="card-text reservation-information">{{information.location}}</p>
+              <p class="card-text reservation-information">{{this.chairLocation[0]}} - {{this.chairLocation[1]}}</p>
             </div>
           </div>
         </div>

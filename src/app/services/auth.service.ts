@@ -25,8 +25,8 @@ export class AuthService {
     this.authState = angularFireAuth.authState;
     this.detachedAuth = this.authApp.auth();
 
-    releaseChairService.addReservations();
     releaseChairService.removeOutdatedReservations();
+    releaseChairService.addReservations();
   }
 
   // Returns true if user is logged in

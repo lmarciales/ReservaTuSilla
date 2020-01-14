@@ -12,8 +12,8 @@
         <img src="assets/img/edit.svg" class="edit-icon" alt="Edit">
       </button>
       <div class="dropdown-menu dropdown-menu-right">
-        <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>
-        <button class="dropdown-item" type="button" (click)="deleteReservation(reservation[0].id)">Delete reservation</button>
+        <!--        <button class="dropdown-item" type="button" (click)="openEditModal()">Edit reservation</button>-->
+        <button class="dropdown-item" type="button" (click)="deleteReservation(reservation[0].id, reservation[0].chairId)">Delete reservation</button>
       </div>
       <div class="col-12">
         <div class="card-deck">
@@ -31,9 +31,9 @@
             <div class="card-body">
               <h5 class="card-title label">Time</h5>
               <p class="card-text reservation-information">
-                {{reservation[0].sTime.hour}}:{{reservation[0].sTime.minute < 10 ? '0' +reservation[0].sTime.minute : reservation[0].sTime.minute}}
+                {{reservation[0].sTime.hour}}:{{reservation[0].sTime.minute < 10 ? '0' + reservation[0].sTime.minute : reservation[0].sTime.minute}}
                 -
-                {{reservation[0].eTime.hour}}:{{reservation[0].eTime.minute < 10 ? '0' +reservation[0].eTime.minute : reservation[0].eTime.minute}}
+                {{reservation[0].eTime.hour}}:{{reservation[0].eTime.minute < 10 ? '0' + reservation[0].eTime.minute : reservation[0].eTime.minute}}
               </p>
             </div>
           </div>

@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { EditReservationComponent } from 'src/app/components/main/edit-reservation/edit-reservation.component';
+import { ConfirmationModalComponent } from 'src/app/components/shared/confirmation-modal/confirmation-modal.component';
 import { ReservationModel } from 'src/app/models/reservation.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AlertModel } from '../../../models/alert.model';
-import { ConfirmationModalComponent } from 'src/app/components/shared/confirmation-modal/confirmation-modal.component';
+import { ChairModel } from '../../../models/chair.model';
 
 @Component({
   selector: 'app-reservation-state',
@@ -14,15 +15,17 @@ import { ConfirmationModalComponent } from 'src/app/components/shared/confirmati
 })
 export class ReservationStateComponent implements OnInit {
 
-  private uid: string;
   collectionName: string;
   editable: boolean;
   chairLocation: string[];
   public alert: AlertModel[];
   reservation: ReservationModel[];
+  private uid: string;
 
   constructor(public dialog: MatDialog, private crudService: CrudService, private user: AuthService) {
-    this.user.currentUser.subscribe((data) => { this.uid = data.uid; });
+    this.user.currentUser.subscribe((data) => {
+      this.uid = data.uid;
+    });
     this.editable = false;
     this.collectionName = 'reservation';
     this.chairLocation = [];
@@ -58,7 +61,8 @@ export class ReservationStateComponent implements OnInit {
       if (this.reservation !== undefined && this.reservation.length) {
         this.crudService.getDocument('chairs', this.reservation[0].chairId).then((chairResponse) => {
           this.chairLocation[0] = chairResponse.data() ? (chairResponse.data().location ? chairResponse.data().location : '- -') : '- -';
-          this.chairLocation[1] = chairResponse.data() ? (chairResponse.data().description ? chairResponse.data().description : '- -') : '- -';
+          this.chairLocation[1] =
+            chairResponse.data() ? (chairResponse.data().description ? chairResponse.data().description : '- -') : '- -';
         }, error => {
           this.alert = [{
             type: 'danger',
@@ -105,7 +109,7 @@ export class ReservationStateComponent implements OnInit {
   //   });
   // }
 
-  deleteReservation(id: string) {
+  deleteReservation(id: string, chairId: string) {
     const dialogRefDelete = this.dialog.open(ConfirmationModalComponent, {
       width: '600px',
       data: {
@@ -118,6 +122,21 @@ export class ReservationStateComponent implements OnInit {
       if (result !== undefined && result === true) {
         this.crudService.deleteDocument(this.collectionName, id)
           .then(() => {
+            this.crudService.getDocument('chairs', chairId).then(res => {
+              if (res) {
+                const response = res.data();
+                const chair: ChairModel = {
+                  description: response.description,
+                  owner: response.owner,
+                  location: response.location,
+                  released: true,
+                  systemJob: response.systemJob
+                };
+                this.crudService.updateDocument('chairs', chairId, chair).then(() => {
+                  console.log('Chair updated');
+                });
+              }
+            });
             this.alert = [{
               type: 'success',
               message: 'Chair deleted successfully!'

@@ -41,7 +41,7 @@ export class ReleaseChairService {
         const currentDate = new Date();
 
         // @ts-ignore
-        if (data.owner !== 'free' && data.released !== false) {
+        if (data.owner !== 'free' && data.released !== false && data.systemJob !== true) {
           const reservation: ReservationModel = {
             // @ts-ignore
             userId: data.owner,
@@ -70,7 +70,8 @@ export class ReleaseChairService {
             description: data.description,
             // @ts-ignore
             location: data.location,
-            released: false
+            released: false,
+            systemJob: true
           };
 
           this.updateChairReleasedState(id, chairToUpdate);

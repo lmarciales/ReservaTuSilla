@@ -25,6 +25,7 @@ export class AuthService {
     this.authState = angularFireAuth.authState;
     this.detachedAuth = this.authApp.auth();
 
+    releaseChairService.addReservations();
     releaseChairService.removeOutdatedReservations();
   }
 

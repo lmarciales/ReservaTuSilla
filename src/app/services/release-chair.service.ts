@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ChairModel } from '../models/chair.model';
 import { DateModel, TimeModel } from '../models/date-time.model';
+import { ReservationModel } from '../models/reservation.model';
 import { CrudService } from './crud.service';
 
 @Injectable({
@@ -7,9 +9,11 @@ import { CrudService } from './crud.service';
 })
 export class ReleaseChairService {
 
+  private collectionChairs: string;
   private collectionReservations: string;
 
   constructor(private crudService: CrudService) {
+    this.collectionChairs = 'chairs';
     this.collectionReservations = 'reservation';
   }
 
@@ -27,6 +31,68 @@ export class ReleaseChairService {
 
   private static _checkTime(currentTime: TimeModel, reservationTime: TimeModel) {
     return (currentTime.hour >= reservationTime.hour && currentTime.minute >= reservationTime.minute);
+  }
+
+  addReservations() {
+    this.crudService.getCollection(this.collectionChairs).subscribe(res => {
+      for (const chair of res) {
+        const id = chair.payload.doc.id;
+        const data = chair.payload.doc.data();
+        const currentDate = new Date();
+
+        // @ts-ignore
+        if (data.owner !== 'free' && data.released !== false) {
+          const reservation: ReservationModel = {
+            // @ts-ignore
+            userId: data.owner,
+            chairId: id,
+            date: {
+              year: currentDate.getFullYear(),
+              month: currentDate.getMonth() + 1,
+              day: currentDate.getDate()
+            },
+            sTime: {
+              hour: 0,
+              minute: 0
+            },
+            eTime: {
+              hour: 24,
+              minute: 0
+            }
+          };
+
+          this.createReservation(reservation);
+
+          const chairToUpdate: ChairModel = {
+            // @ts-ignore
+            owner: data.owner,
+            // @ts-ignore
+            description: data.description,
+            // @ts-ignore
+            location: data.location,
+            released: false
+          };
+
+          this.updateChairReleasedState(id, chairToUpdate);
+        }
+      }
+    });
+  }
+
+  createReservation(reservation: ReservationModel) {
+    this.crudService.createDocument(this.collectionReservations, reservation).then(() => {
+      console.log('Reservations updated');
+    }).catch(error => {
+      console.log(error);
+    });
+  }
+
+  updateChairReleasedState(chairId, data) {
+    this.crudService.updateDocument(this.collectionChairs, chairId, data).then(() => {
+      console.log('Chairs updated');
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   removeOutdatedReservations() {

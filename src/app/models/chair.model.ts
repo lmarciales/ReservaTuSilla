@@ -4,4 +4,5 @@ export interface ChairModel {
   description: string;
   owner: string;
   location: string;
+  released: boolean;
 }

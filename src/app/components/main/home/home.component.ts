@@ -20,16 +20,7 @@ export class HomeComponent implements OnInit {
   chairs: any;
   reservations: any;
   closeResult: string;
-
   modalProperties: ConfirmationModalModel;
-
-  dataChair: chairModel;
-  dataReservation: ReservationView = {
-    date: '01/01/2020',
-    timeStart: '08:00',
-    timeEnd: '16:00',
-    location: 'Occidental wing'
-  };
 
   constructor(private authService: AuthService, private chairService: ChairService, private reservationService: ReservationsService) {
     this.modalProperties = {
@@ -59,9 +50,6 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  getChairs() {
-  }
-
   updateChair(chair) {
     this.chairService.updateChair(chair).then(() => {
       console.log('Chair updated.');
@@ -76,10 +64,6 @@ export class HomeComponent implements OnInit {
     }).catch(error => {
       console.log(error);
     });
-  }
-
-  // Reservation functions
-  getReservations() {
   }
 
   takeChair(chair: reserveChair) {

@@ -23,7 +23,7 @@ export class ChairsListComponent implements OnInit {
   public data: ChairModel = {
     description: 'Silla 1',
     owner: 'Mariana',
-    location: 'Ala 2'
+    location: 'Ala 2',
   };
   public chairList: ChairModel[];
   public alert: AlertModel[];

@@ -1,4 +1,5 @@
 <div class="container">
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
   <div class="col-12">
     <h3>Prepare your reservation</h3>
     <div class="row align-items-center" [formGroup]="consultForm">
@@ -50,7 +51,7 @@
           <th scope="row">{{chair.description}}</th>
           <td>{{chair.location}}</td>
           <td class="actions">
-            <em>Icono para crear reserva..</em>
+            <mat-icon matSuffix (click)="createReservation(chair)">add</mat-icon>
           </td>
         </tr>
         </tbody>
@@ -59,9 +60,9 @@
   </div>
 </div>
 
-Sillas disponibles:
-<pre>{{availableChairs | json}}</pre>
-Sillas:
-<pre>{{chairList | json}}</pre>
-Reservas:
-<pre>{{reservationList | json}}</pre>
+<!--Sillas disponibles:-->
+<!--<pre>{{availableChairs | json}}</pre>-->
+<!--Sillas:-->
+<!--<pre>{{chairList | json}}</pre>-->
+<!--Reservas:-->
+<!--<pre>{{reservationList | json}}</pre>-->

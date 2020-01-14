@@ -1,4 +1,5 @@
 <div class="container">
+  <app-alert *ngIf="alert" [alerts]="alert"></app-alert>
   <div class="col-12">
     <h3>Prepare your reservation</h3>
     <div class="row align-items-center" [formGroup]="consultForm">

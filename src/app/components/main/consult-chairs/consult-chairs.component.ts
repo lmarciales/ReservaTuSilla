@@ -179,7 +179,7 @@ export class ConsultChairsComponent implements OnInit {
   }
 
   private openModalReservation(chair: ChairModel) {
-    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+    const dialogRefReservation = this.dialog.open(ConfirmationModalComponent, {
       width: '600px',
       data: {
         buttonText: 'Create reservation',
@@ -187,7 +187,7 @@ export class ConsultChairsComponent implements OnInit {
         title: 'Add reservation'
       }
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRefReservation.afterClosed().subscribe((result) => {
       if (result !== undefined && result === true) {
         this.reservation.chairId = chair.id;
         this.reservation.userId = this.uid;
@@ -195,6 +195,7 @@ export class ConsultChairsComponent implements OnInit {
         this.reservation.sTime = this.consultForm.value.sTime;
         this.reservation.eTime = this.consultForm.value.eTime;
         this.crudService.createDocument(this.collectionName, this.reservation).then(() => {
+          this.onClick();
           this.alert = [{
             type: 'success',
             message: 'Chair created successfully!'
@@ -214,7 +215,7 @@ export class ConsultChairsComponent implements OnInit {
       width: '600px',
       data: {
         buttonText: 'Return',
-        modalText: 'You have an active reservation at this time and therefore you cannot book.',
+        modalText: 'You have an active reservation at this time and therefore you cannot book later.',
         title: 'Active booking'
       }
     });

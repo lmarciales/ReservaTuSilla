@@ -1,13 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { EditReservationComponent } from 'src/app/components/main/edit-reservation/edit-reservation.component';
-import { ReservationView } from 'src/app/model/reservationView.model';
 import { ReservationModel } from 'src/app/models/reservation.model';
 import { AuthService } from 'src/app/services/auth.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { AlertModel } from '../../../models/alert.model';
-import { ChairModel } from '../../../models/chair.model';
-import { ChairService } from 'src/app/services/chair.service';
+import { ConfirmationModalComponent } from 'src/app/components/shared/confirmation-modal/confirmation-modal.component';
 
 @Component({
   selector: 'app-reservation-state',
@@ -16,40 +14,23 @@ import { ChairService } from 'src/app/services/chair.service';
 })
 export class ReservationStateComponent implements OnInit {
 
-  @Input() information: ReservationView;
-
   private uid: string;
   collectionName: string;
   editable: boolean;
-  chairs: ChairModel[];
+  chairLocation: string[];
   public alert: AlertModel[];
-  reservation: ReservationModel = {
-    date: {
-      day: 0,
-      month: 0,
-      year: 0
-    },
-    eTime: {
-      hour: 0,
-      minute: 0
-    },
-    sTime: {
-      hour: 0,
-      minute: 0
-    },
-    userId: '',
-    chairId: ''
-  };
+  reservation: ReservationModel[];
 
-  constructor(public dialog: MatDialog, private crudService: CrudService, private user: AuthService, private chair: ChairService) {
+  constructor(public dialog: MatDialog, private crudService: CrudService, private user: AuthService) {
     this.user.currentUser.subscribe((data) => { this.uid = data.uid; });
     this.editable = false;
     this.collectionName = 'reservation';
+    this.chairLocation = [];
+    this.reservation = [];
   }
 
   ngOnInit() {
     this.getReservations();
-    this.deleteChair("TSF5C4BzzzNxcpCH0XCc");
   }
 
   public editReservation() {
@@ -57,11 +38,10 @@ export class ReservationStateComponent implements OnInit {
   }
 
   public openEditModal() {
-    const dialogRef = this.dialog.open(EditReservationComponent, {
+    const dialogRefEdit = this.dialog.open(EditReservationComponent, {
       width: '992px'
     });
-
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRefEdit.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
@@ -75,21 +55,17 @@ export class ReservationStateComponent implements OnInit {
           ...e.payload.doc.data()
         };
       });
-      this.crudService.getDocumentByParam('chairs', this.reservation[0].chairId, 'id').subscribe((chairResponse) => {
-        // @ts-ignore
-        this.chairs = chairResponse.map((e) => {
-          return {
-            id: e.payload.doc.id,
-            ...e.payload.doc.data()
-          };
+      if (this.reservation !== undefined && this.reservation.length) {
+        this.crudService.getDocument('chairs', this.reservation[0].chairId).then((chairResponse) => {
+          this.chairLocation[0] = chairResponse.data() ? (chairResponse.data().location ? chairResponse.data().location : '- -') : '- -';
+          this.chairLocation[1] = chairResponse.data() ? (chairResponse.data().description ? chairResponse.data().description : '- -') : '- -';
+        }, error => {
+          this.alert = [{
+            type: 'danger',
+            message: 'Something went wrong: ' + error
+          }];
         });
-        console.log(this.chairs);
-      }, error => {
-        this.alert = [{
-          type: 'danger',
-          message: 'Something went wrong: ' + error
-        }];
-      });
+      }
     }, error => {
       this.alert = [{
         type: 'danger',
@@ -97,8 +73,6 @@ export class ReservationStateComponent implements OnInit {
       }];
     });
   }
-
-
 
   // editChair(chair: ChairModel) {
   //   console.log(chair);
@@ -131,32 +105,31 @@ export class ReservationStateComponent implements OnInit {
   //   });
   // }
 
-  deleteChair(chairId) {
-    // const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-    //   width: '600px',
-    //   data: {
-    //     buttonText: 'Delete',
-    //     modalText: 'Are you sure that you want to delete chair?',
-    //     title: 'Delete chair'
-    //   }
-    // });
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result !== undefined && result === true) {
-    this.crudService.deleteDocument(this.collectionName, chairId)
-      .then(() => {
-        this.alert = [{
-          type: 'success',
-          message: 'Chair deleted successfully!'
-        }];
-      })
-      .catch(error => {
-        this.alert = [{
-          type: 'danger',
-          message: 'Something went wrong: ' + error
-        }];
-      });
-    // }
-    // });
+  deleteReservation(id: string) {
+    const dialogRefDelete = this.dialog.open(ConfirmationModalComponent, {
+      width: '600px',
+      data: {
+        buttonText: 'Delete',
+        modalText: 'Are you sure that you want to delete chair?',
+        title: 'Delete chair'
+      }
+    });
+    dialogRefDelete.afterClosed().subscribe((result) => {
+      if (result !== undefined && result === true) {
+        this.crudService.deleteDocument(this.collectionName, id)
+          .then(() => {
+            this.alert = [{
+              type: 'success',
+              message: 'Chair deleted successfully!'
+            }];
+          })
+          .catch(error => {
+            this.alert = [{
+              type: 'danger',
+              message: 'Something went wrong: ' + error
+            }];
+          });
+      }
+    });
   }
-
 }
